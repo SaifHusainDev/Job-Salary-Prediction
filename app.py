@@ -30,7 +30,6 @@ st.markdown("""
 }
 
 .main-title h1 {
-    font-family: 'Brush Script MT', cursive;
     font-size: 42px;
     margin-bottom: 5px;
 }
@@ -104,7 +103,7 @@ label {
     margin-top: 20px;
     text-align: center;
     font-weight: bold;
-    font-family: 'Brush Script MT', cursive;
+    
 }
 
 </style>
