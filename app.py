@@ -7,63 +7,102 @@ import pandas as pd
 
 
 # =========================
-# CUSTOM CSS
+# PROFESSIONAL UI CSS
 # =========================
 st.markdown("""
 <style>
 
-body {
-    background-color: #f4f6f9;
+/* Main Background */
+.stApp {
+    background-color: #f5f7fb;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-.main {
-    background-color: #f4f6f9;
-}
-
-h1 {
-    color: white !important;
-    text-align: center;
-    font-size: 42px !important;
-}
-
-.title-box {
+/* Header Box */
+.main-title {
     background: linear-gradient(90deg, #4CAF50, #2E8B57);
-    padding: 20px;
-    border-radius: 15px;
+    padding: 25px;
+    border-radius: 18px;
     text-align: center;
-    margin-bottom: 30px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
-}
-
-.stButton>button {
-    background-color: #4CAF50;
     color: white;
+    margin-bottom: 30px;
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.15);
+}
+
+.main-title h1 {
+    font-size: 42px;
+    margin-bottom: 5px;
+}
+
+.main-title p {
     font-size: 18px;
-    border-radius: 10px;
-    padding: 10px 25px;
-    border: none;
+    opacity: 0.9;
+}
+
+/* Card Design */
+.block-container {
+    padding-top: 2rem;
+}
+
+/* Input Labels */
+label {
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+/* Inputs */
+.stNumberInput input,
+.stSelectbox div[data-baseweb="select"] {
+    border-radius: 12px !important;
+}
+
+/* Button */
+.stButton > button {
     width: 100%;
-}
-
-.stButton>button:hover {
-    background-color: #45a049;
-}
-
-div[data-baseweb="select"] {
-    border-radius: 10px;
-}
-
-.stNumberInput input {
-    border-radius: 10px;
-}
-
-.result-box {
-    background-color: #ffffff;
-    padding: 20px;
+    background: linear-gradient(90deg, #ff4b4b, #ff6b6b);
+    color: white;
+    border: none;
     border-radius: 12px;
+    height: 55px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.stButton > button:hover {
+    transform: scale(1.02);
+    background: linear-gradient(90deg, #ff3333, #ff5555);
+}
+
+/* Prediction Result Box */
+.result-box {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    margin-top: 30px;
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.1);
     text-align: center;
+}
+
+.result-box h2 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.result-box h1 {
+    color: #222;
+    font-size: 50px;
+}
+
+/* Success Message */
+.success-box {
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 10px;
     margin-top: 20px;
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    font-weight: bold;
 }
 
 </style>
@@ -105,24 +144,28 @@ remote_options = ["Other"] + remote_options
 # TITLE
 # =========================
 st.markdown("""
-<div class="title-box">
-    <h1>💼 Salary Prediction App</h1>
-    <p style="color:white; font-size:18px;">
-        Machine Learning Salary Predictor
-    </p>
+<div class="main-title">
+    <h1>💼 Developer Salary Predictor</h1>
+    <p>Predict salaries using Machine Learning with a professional AI-powered dashboard.</p>
 </div>
 """, unsafe_allow_html=True)
 
 # =========================
 # USER INPUT
 # =========================
-exp = st.number_input("Experience (years)", 0, 30)
-skills = st.number_input("Skills Count", 0, 50)
-cert = st.number_input("Certifications", 0, 20)
 
-job = st.selectbox("Job Role", job_options)
-edu = st.selectbox("Education", edu_options)
-loc = st.selectbox("Location", loc_options)
+col1, col2 = st.columns(2)
+
+with col1:
+    exp = st.number_input("Experience (years)", 0, 30)
+    skills = st.number_input("Skills Count", 0, 50)
+    cert = st.number_input("Certifications", 0, 20)
+
+with col2:
+    job = st.selectbox("Job Role", job_options)
+    edu = st.selectbox("Education", edu_options)
+    loc = st.selectbox("Location", loc_options)
+
 ind = st.selectbox("Industry", ind_options)
 company = st.selectbox("Company Size", company_options)
 remote = st.selectbox("Remote Work", remote_options)
@@ -175,12 +218,24 @@ input_df[num_cols] = scaler.transform(input_df[num_cols])
 # PREDICTION
 # =========================
 if st.button("Predict Salary"):
+
     prediction = model.predict(input_df)
+
+    # Success Message
+    st.markdown("""
+    <div class="success-box">
+        ✅ Prediction Completed Successfully
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Prediction Result Card
     st.markdown(f"""
-<div class="result-box">
-    <h2>💰 Predicted Salary</h2>
-    <h1 style="color:#4CAF50;">₹ {int(prediction[0])}</h1>
-</div>
-""", unsafe_allow_html=True)
+    <div class="result-box">
+        <h2>💰 Predicted Salary</h2>
+        <h1 style="color:#4CAF50;">₹ {int(prediction[0]):,}</h1>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Animations
     st.balloons()
     st.snow()
