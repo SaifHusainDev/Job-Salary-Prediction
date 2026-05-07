@@ -30,6 +30,7 @@ st.markdown("""
 }
 
 .main-title h1 {
+    font-family: 'Brush Script MT', cursive;
     font-size: 42px;
     margin-bottom: 5px;
 }
@@ -103,6 +104,7 @@ label {
     margin-top: 20px;
     text-align: center;
     font-weight: bold;
+    font-family: 'Brush Script MT', cursive;
 }
 
 </style>
@@ -146,7 +148,15 @@ remote_options = ["Other"] + remote_options
 st.markdown("""
 <div class="main-title">
     <h1>💼 Developer Salary Predictor</h1>
-    <p>Predict salaries using Machine Learning with a professional AI-powered dashboard.</p>
+
+    <p style="
+        font-size:18px;
+        margin-top:10px;
+        color:white;
+    ">
+        AI-Powered Salary Prediction Dashboard
+    </p>
+
 </div>
 """, unsafe_allow_html=True)
 
