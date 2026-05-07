@@ -5,6 +5,71 @@ import streamlit as st
 import pickle
 import pandas as pd
 
+
+# =========================
+# CUSTOM CSS
+# =========================
+st.markdown("""
+<style>
+
+body {
+    background-color: #f4f6f9;
+}
+
+.main {
+    background-color: #f4f6f9;
+}
+
+h1 {
+    color: white !important;
+    text-align: center;
+    font-size: 42px !important;
+}
+
+.title-box {
+    background: linear-gradient(90deg, #4CAF50, #2E8B57);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+}
+
+.stButton>button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 10px 25px;
+    border: none;
+    width: 100%;
+}
+
+.stButton>button:hover {
+    background-color: #45a049;
+}
+
+div[data-baseweb="select"] {
+    border-radius: 10px;
+}
+
+.stNumberInput input {
+    border-radius: 10px;
+}
+
+.result-box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 20px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
 # =========================
 # LOAD FILES
 # =========================
@@ -39,7 +104,14 @@ remote_options = ["Other"] + remote_options
 # =========================
 # TITLE
 # =========================
-st.title("💼 Salary Prediction App (KNN Improved)")
+st.markdown("""
+<div class="title-box">
+    <h1>💼 Salary Prediction App</h1>
+    <p style="color:white; font-size:18px;">
+        Machine Learning Salary Predictor
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # =========================
 # USER INPUT
@@ -104,6 +176,11 @@ input_df[num_cols] = scaler.transform(input_df[num_cols])
 # =========================
 if st.button("Predict Salary"):
     prediction = model.predict(input_df)
-    st.success(f"💰 Predicted Salary: {int(prediction[0])}")
+    st.markdown(f"""
+<div class="result-box">
+    <h2>💰 Predicted Salary</h2>
+    <h1 style="color:#4CAF50;">₹ {int(prediction[0])}</h1>
+</div>
+""", unsafe_allow_html=True)
     st.balloons()
     st.snow()
