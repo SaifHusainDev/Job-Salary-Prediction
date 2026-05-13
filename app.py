@@ -8,6 +8,15 @@ import json
 import os
 
 # =========================
+# PAGE CONFIG
+# =========================
+st.set_page_config(
+    page_title="Salary Prediction App",
+    page_icon="💼",
+    layout="centered"
+)
+
+# =========================
 # USER DATABASE
 # =========================
 if not os.path.exists("users.json"):
@@ -31,33 +40,27 @@ scaler = pickle.load(open("scaler.pkl", "rb"))
 columns = pickle.load(open("columns.pkl", "rb"))
 
 # =========================
-# HELPER: EXTRACT OPTIONS FROM TRAINED COLUMNS
+# HELPER FUNCTION
 # =========================
 def get_options(prefix):
     opts = [col.replace(prefix, "") for col in columns if col.startswith(prefix)]
     opts = sorted(list(set(opts)))
     return opts
 
-# Extract all possible options
-job_options = get_options("job_title_")
-edu_options = get_options("education_level_")
-loc_options = get_options("location_")
-ind_options = get_options("industry_")
-company_options = get_options("company_size_")
-remote_options = get_options("remote_work_")
-
-# Add baseline category
-job_options = ["Other"] + job_options
-edu_options = ["Other"] + edu_options
-loc_options = ["Other"] + loc_options
-ind_options = ["Other"] + ind_options
-company_options = ["Other"] + company_options
-remote_options = ["Other"] + remote_options
+# =========================
+# OPTIONS
+# =========================
+job_options = ["Other"] + get_options("job_title_")
+edu_options = ["Other"] + get_options("education_level_")
+loc_options = ["Other"] + get_options("location_")
+ind_options = ["Other"] + get_options("industry_")
+company_options = ["Other"] + get_options("company_size_")
+remote_options = ["Other"] + get_options("remote_work_")
 
 # =========================
 # TITLE
 # =========================
-st.title("💼 Salary Prediction App (KNN Improved)")
+st.title("💼 Salary Prediction App")
 
 # =========================
 # LOGIN / SIGNUP
@@ -71,18 +74,45 @@ if not st.session_state.logged_in:
     # =========================
     if menu == "Signup":
 
-        st.subheader("Create Account")
+        st.subheader("Create Professional Account")
 
+        first_name = st.text_input("First Name")
+        sur_name = st.text_input("Surname")
+        last_name = st.text_input("Last Name")
+        email = st.text_input("Email Address")
         new_user = st.text_input("Username")
         new_pass = st.text_input("Password", type="password")
+        confirm_pass = st.text_input("Confirm Password", type="password")
 
         if st.button("Signup"):
 
-            if new_user in users:
-                st.error("User already exists")
+            # Empty fields check
+            if (
+                first_name == "" or
+                last_name == "" or
+                email == "" or
+                new_user == "" or
+                new_pass == "" or
+                confirm_pass == ""
+            ):
+                st.error("Please fill all fields")
+
+            # Password match check
+            elif new_pass != confirm_pass:
+                st.error("Passwords do not match")
+
+            # Existing user check
+            elif new_user in users:
+                st.error("Username already exists")
 
             else:
-                users[new_user] = new_pass
+
+                users[new_user] = {
+                    "first_name": first_name,
+                    "last_name": last_name,
+                    "email": email,
+                    "password": new_pass
+                }
 
                 with open("users.json", "w") as f:
                     json.dump(users, f)
@@ -101,7 +131,7 @@ if not st.session_state.logged_in:
 
         if st.button("Login"):
 
-            if username in users and users[username] == password:
+            if username in users and users[username]["password"] == password:
 
                 st.success("Login successful")
                 st.session_state.logged_in = True
@@ -119,6 +149,8 @@ if st.session_state.logged_in:
     if st.sidebar.button("Logout"):
         st.session_state.logged_in = False
         st.rerun()
+
+    st.success("Welcome to Salary Prediction Dashboard")
 
     # =========================
     # USER INPUT
@@ -191,7 +223,7 @@ if st.session_state.logged_in:
 
         prediction = model.predict(input_df)
 
-        st.success(f"💰 Predicted Salary: {int(prediction[0])}")
+        st.success(f"💰 Predicted Salary: ₹ {int(prediction[0]):,}")
 
         st.balloons()
         st.snow()
