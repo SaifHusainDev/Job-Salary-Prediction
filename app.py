@@ -27,7 +27,7 @@ st.markdown("""
 
 /* Title */
 h1 {
-    color: white;
+    color: #FFFFFF;
     text-align: center;
     font-size: 42px;
     font-weight: bold;
@@ -40,7 +40,7 @@ section[data-testid="stSidebar"] {
 
 /* Sidebar Text */
 section[data-testid="stSidebar"] * {
-    color: white;
+    color: #FFFFFF;
 }
 
 /* Input Box */
