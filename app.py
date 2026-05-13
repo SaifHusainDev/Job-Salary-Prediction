@@ -67,7 +67,16 @@ st.title("💼 Salary Prediction App")
 # =========================
 if not st.session_state.logged_in:
 
-    menu = st.sidebar.selectbox("Menu", ["Login", "Signup"])
+    if "signup_success" not in st.session_state:
+        st.session_state.signup_success = False
+
+    default_index = 0 if st.session_state.signup_success else 1
+
+    menu = st.sidebar.selectbox(
+        "Menu",
+        ["Login", "Signup"],
+        index=default_index
+)
 
     # =========================
     # SIGNUP
@@ -118,6 +127,9 @@ if not st.session_state.logged_in:
                     json.dump(users, f)
 
                 st.success("Account created successfully")
+                st.info("Please login with your account")
+                st.session_state.signup_success = True
+                st.rerun()
 
     # =========================
     # LOGIN
