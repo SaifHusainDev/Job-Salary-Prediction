@@ -21,13 +21,13 @@ st.markdown("""
 
 /* Main Background */
 .stApp {
-    background-color: #f5f7fb;
+    background-color: #192841;
     font-family: 'Segoe UI', sans-serif;
 }
 
 /* Title */
 h1 {
-    color: #0D47A1;
+    color: white;
     text-align: center;
     font-size: 42px;
     font-weight: bold;
@@ -35,7 +35,7 @@ h1 {
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background-color: #0D47A1;
+    background-color: #001f3f;
 }
 
 /* Sidebar Text */
