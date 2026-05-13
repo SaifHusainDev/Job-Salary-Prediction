@@ -16,6 +16,71 @@ st.set_page_config(
     layout="centered"
 )
 
+st.markdown("""
+<style>
+
+/* Main Background */
+.stApp {
+    background-color: #f5f7fb;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Title */
+h1 {
+    color: #0D47A1;
+    text-align: center;
+    font-size: 42px;
+    font-weight: bold;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #0D47A1;
+}
+
+/* Sidebar Text */
+section[data-testid="stSidebar"] * {
+    color: white;
+}
+
+/* Input Box */
+.stTextInput input,
+.stNumberInput input {
+    border-radius: 10px;
+    border: 2px solid #2196F3;
+}
+
+/* Select Box */
+.stSelectbox div {
+    border-radius: 10px;
+}
+
+/* Buttons */
+.stButton > button {
+    width: 100%;
+    background: linear-gradient(90deg, #2196F3, #0D47A1);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Button Hover */
+.stButton > button:hover {
+    background: linear-gradient(90deg, #1976D2, #0B3C91);
+    transform: scale(1.02);
+}
+
+/* Success Box */
+.stSuccess {
+    border-radius: 10px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 # =========================
 # USER DATABASE
 # =========================
